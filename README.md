@@ -3,7 +3,7 @@ DXD Quick Index Link Generator!
 
 ---
 
-**Welcome to [Your Website Name] - Your Ultimate Index Link Generator!**
+**Welcome to DXD QuickLink Generator - Your Ultimate Index Link Generator!**
 
 **Getting Started:**
 
