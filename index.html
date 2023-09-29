@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DXD QuickLink Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://iili.io/JdzlEjp.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #bdb3b3;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(30, 30, 34, 0.8);
+            border-radius: 10px;
+        }
+        .user-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1e1e22;
+            color: #bdb3b3;
+        }
+        .user-input:focus {
+            outline: none;
+            border: 2px solid #6d8abc;
+        }
+        .user-input::placeholder {
+            color: #787986;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #6d8abc;
+            color: #000000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #787986;
+            color: #ffffff;
+            transform: scale(1.05);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #787986;
+            border-radius: 5px;
+            background-color: #4f4c4f;
+        }
+        .code-box {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #787986;
+            border-radius: 5px;
+            text-align: left;
+            background-color: #1e1e22;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: #6d8abc;">DXD Index Link Generator!</h1>
+        <p style="color: #6d8abc;">Generate direct download links for Google Drive files</p>
+        <label for="link" style="color: #6d8abc;">Google Drive Link:</label>
+        <input type="text" id="link" class="user-input" required placeholder="Enter Google Drive link...">
+        <br><br>
+        <label for="apiKey" style="color: #6d8abc;">API Key (if required fast download):</label>
+        <input type="text" id="apiKey" class="user-input" placeholder="Enter API Key (optional)">
+        <br><br>
+        <button onclick="generateIndexLinks()">Generate Links</button>
+        <div class="result">
+            <h2 style="color: #6d8abc;">Generated Links:</h2>
+            <div id="indexLinks"></div>
+            <button onclick="copyLinks()">Copy Links!</button>
+        </div>
+    </div>
+
+    <script>
+        function generateIndexLinks() {
+            const link = document.getElementById('link').value.trim();
+            const apiKey = document.getElementById('apiKey').value.trim();
+
+            const fileId = link.split('/')[5];
+            const indexLink1 = `https://drive.google.com/u/0/uc?id=${fileId}&export=download`;
+
+            let indexLink2;
+            if (apiKey) {
+                indexLink2 = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
+            } else {
+                indexLink2 = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
+            }
+
+            const indexLinksDiv = document.getElementById('indexLinks');
+            indexLinksDiv.innerHTML = `
+                <div id="indexLink1" class="code-box fade-in">
+                    <h3>Direct Download Link</h3>
+                    <code>${indexLink1}</code>
+                </div>
+                <div id="indexLink2" class="code-box fade-in">
+                    <h3>Alternate Link</h3>
+                    <code>${indexLink2}</code>
+                </div>
+            `;
+        }
+
+        function copyLinks() {
+            const indexLink1 = document.querySelector('#indexLink1 code').textContent;
+            const indexLink2 = document.querySelector('#indexLink2 code').textContent;
+
+            const formattedLinks = `Direct Download Links:\n\nINDEX LINK-1 - ${indexLink1}\n\nINDEX LINK-2 - ${indexLink2}`;
+
+            const temporaryInput = document.createElement('textarea');
+            document.body.appendChild(temporaryInput);
+            temporaryInput.value = formattedLinks;
+            temporaryInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(temporaryInput);
+
+            const copyButton = document.querySelector('#indexLinks button');
+            copyButton.textContent = 'Copied!';
+            copyButton.style.backgroundColor = '#4f4c4f';
+            copyButton.style.transform = 'scale(1)';
+            copyButton.style.transition = 'none';
+            setTimeout(() => {
+                copyButton.textContent = 'Copy Links!';
+                copyButton.style.backgroundColor = '#6d8abc';
+                copyButton.style.transform = 'scale(1.05)';
+                copyButton.style.transition = 'background-color 0.3s, transform 0.3s';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
