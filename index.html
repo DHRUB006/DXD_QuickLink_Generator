@@ -25,7 +25,7 @@
             border-radius: 10px;
         }
         .user-input {
-            width: 100%;
+            width: calc(100% - 20px); /* Adjusted width */
             padding: 10px;
             margin: 10px 0;
             font-size: 16px;
@@ -33,6 +33,7 @@
             border-radius: 5px;
             background-color: #1e1e22;
             color: #bdb3b3;
+            box-sizing: border-box; /* Added box-sizing */
         }
         .user-input:focus {
             outline: none;
@@ -109,6 +110,11 @@
             const link = document.getElementById('link').value.trim();
             const apiKey = document.getElementById('apiKey').value.trim();
 
+            if (link === '') {
+                alert('Please enter a Google Drive link.');
+                return;
+            }
+
             const fileId = link.split('/')[5];
             const indexLink1 = `https://drive.google.com/u/0/uc?id=${fileId}&export=download`;
 
@@ -147,7 +153,7 @@
 
             const copyButton = document.querySelector('#indexLinks button');
             copyButton.textContent = 'Copied!';
-            copyButton.style.backgroundColor = '#4f4c4f';
+            copyButton.style.backgroundColor = '#4f4f4f';
             copyButton.style.transform = 'scale(1)';
             copyButton.style.transition = 'none';
             setTimeout(() => {
