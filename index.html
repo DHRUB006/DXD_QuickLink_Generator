@@ -117,23 +117,28 @@
 
             const fileId = link.split('/')[5];
             const indexLink1 = `https://drive.google.com/u/0/uc?id=${fileId}&export=download`;
+            const indexLink2 = `https://gdown.arnid.workers.dev/download?id=${fileId}`;
 
-            let indexLink2;
+            let indexLink3;
             if (apiKey) {
-                indexLink2 = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
+                indexLink3 = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
             } else {
-                indexLink2 = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
+                indexLink3 = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
             }
 
             const indexLinksDiv = document.getElementById('indexLinks');
             indexLinksDiv.innerHTML = `
                 <div id="indexLink1" class="code-box fade-in">
-                    <h3>Direct Download Link</h3>
+                    <h3>Direct Download Link 1</h3>
                     <code>${indexLink1}</code>
                 </div>
                 <div id="indexLink2" class="code-box fade-in">
-                    <h3>Alternate Link</h3>
+                    <h3>Direct Download Link 2</h3>
                     <code>${indexLink2}</code>
+                </div>
+                <div id="indexLink3" class="code-box fade-in">
+                    <h3>Alternate Link</h3>
+                    <code>${indexLink3}</code>
                 </div>
             `;
         }
@@ -141,8 +146,9 @@
         function copyLinks() {
             const indexLink1 = document.querySelector('#indexLink1 code').textContent;
             const indexLink2 = document.querySelector('#indexLink2 code').textContent;
+            const indexLink3 = document.querySelector('#indexLink3 code').textContent;
 
-            const formattedLinks = `Direct Download Links:\n\nINDEX LINK-1 - ${indexLink1}\n\nINDEX LINK-2 - ${indexLink2}`;
+            const formattedLinks = `Direct Download Links:\n\nINDEX LINK-1 - ${indexLink1}\n\nINDEX LINK-2 - ${indexLink2}\n\nINDEX LINK-3 - ${indexLink3}`;
 
             const temporaryInput = document.createElement('textarea');
             document.body.appendChild(temporaryInput);
